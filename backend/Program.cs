@@ -7,6 +7,7 @@ Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Database Configuration
 var dbServer = Environment.GetEnvironmentVariable("DB_SERVER");
 var dbPort = Environment.GetEnvironmentVariable("DB_PORT");
 var dbName = Environment.GetEnvironmentVariable("DB_NAME");
@@ -16,7 +17,6 @@ var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 var connectionString =
     $"server={dbServer};port={dbPort};database={dbName};user={dbUser};password={dbPassword};";
 
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(
         connectionString,
@@ -24,10 +24,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     )
 );
 
-// CORS
+// CORS Configuration
 var allowedOrigins =
     Environment.GetEnvironmentVariable("CORS_ALLOWED_ORIGINS")?
-        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+        .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
     ?? Array.Empty<string>();
 
 builder.Services.AddCors(options =>
@@ -41,30 +41,29 @@ builder.Services.AddCors(options =>
     });
 });
 
-
-// CONTROLLERS
+// Controllers
 builder.Services.AddControllers();
 
-// SERVICES
+// Services
 builder.Services.AddScoped<TodoService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<PriorityService>();
 
-// SWAGGER
-
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Log allowed origins
+Console.WriteLine("=== ALLOWED ORIGINS ===");
+Console.WriteLine(string.Join(", ", allowedOrigins));
 
-// swagger
+// Swagger
+app.UseSwagger();
+app.UseSwaggerUI();
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
-// CORS 
-
+// CORS
 app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
