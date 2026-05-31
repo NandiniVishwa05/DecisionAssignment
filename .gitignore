@@ -1,0 +1,77 @@
+# Environment variables
+env
+env.local
+env.production
+env.*.local
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Dependencies
+node_modules
+packages/
+.pnpm-store
+
+# Build outputs
+dist
+dist-ssr
+build
+bin
+obj
+
+# IDE & Editor
+.vscode
+.idea
+*.swp
+*.swo
+*.sw?
+*.sublime-workspace
+*.sublime-project
+.DS_Store
+Thumbs.db
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Cache
+.eslintcache
+.cache
+.next
+
+# Testing
+coverage
+.nyc_output
+
+# IDE files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.vs
+.vscode/*
+!.vscode/extensions.json
+
+# Local development
+*.local
+*.tmp
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Misc
+.turbo
+dist
