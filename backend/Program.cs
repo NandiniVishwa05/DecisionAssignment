@@ -25,17 +25,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 );
 
 // CORS
+var allowedOrigins =
+    Environment.GetEnvironmentVariable("CORS_ALLOWED_ORIGINS")?
+        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+    ?? Array.Empty<string>();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy
-            .WithOrigins(
-                "http://localhost:5173",
-                "http://localhost:3000",
-                "http://localhost:4173"
-            )
+            .WithOrigins(allowedOrigins)
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -58,13 +58,10 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 
-// MIDDLEWARE
+// swagger
 
-if (app.Environment.IsDevelopment())
-{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
 // CORS 
 
