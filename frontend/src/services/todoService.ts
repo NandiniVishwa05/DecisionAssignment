@@ -1,10 +1,19 @@
 import type { TodoItem, CreateTodoDto, UpdateTodoDto } from '../interfaces/TodoItem';
 import { api } from './api';
 
+export interface PaginatedResponse {
+  data: TodoItem[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+
 export const todoService = {
-   getAll: async (): Promise<TodoItem[]> => {
-    const response = await api.get('/todo');
-    return response.data; // ← extract the array
+  // Fetch all todos without pagination (large pageSize)
+  getAll: async (): Promise<TodoItem[]> => {
+    const response = await api.get('/todo?pageSize=1000');
+    return response.data;
   },
 
   getById: async (id: number): Promise<TodoItem> => {
