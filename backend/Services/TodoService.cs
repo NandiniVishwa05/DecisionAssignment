@@ -20,7 +20,7 @@ public class TodoService
     public async Task<PaginatedTodosResponseDto> GetPaged(int page, int pageSize)
     {
         if (page < 1) page = 1;
-        if (pageSize < 1 || pageSize > 100) pageSize = 6;
+        if (pageSize < 1 || pageSize > 1000) pageSize = 6;
 
         var query = _context.TodoItems
             .Include(t => t.Category)
@@ -200,7 +200,7 @@ public class TodoService
     public async Task<PaginatedTodosResponseDto> Search(string? title, int? categoryId, int? priorityId, int page = 1, int pageSize = 6)
     {
         if (page < 1) page = 1;
-        if (pageSize < 1 || pageSize > 100) pageSize = 6;
+        if (pageSize < 1 || pageSize > 1000) pageSize = 6;
 
         var query = _context.TodoItems
             .Include(t => t.Category)
